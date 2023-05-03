@@ -2,15 +2,15 @@
 
 ## [Version 1.3] - 2023-04-24
 
-- NEU: Schnellinfo (Tooltip) auch bei Titeln der Suchergebnisse
-- NEU: Hinweis "Articulus brevis minimus" wird entfernt
-- Fix: "Top Artikel" werden jetzt immer korrekt dargestellt und nur einmal geladen (Optimierung bei der Darstellung von Suchergebnissen nach dem Verlassen einer Artikelansicht über den "← Suche \*" Link und beim Löschen des Suchbegriffes)
-- Fix: wenn ein Top Artikel ausgewählt wurde erscheint jetzt "← Top Artikel" in der Detail Ansicht; wenn in den Einstellungen "Open in: Browser" gewählt wurde wird nichts mehr angezeigt, da mit "Esc" zurückgesprungen werden kann
-- Fix: Tabelle Berechnung im Artikel [Odds Ratio](https://flexikon.doccheck.com/de/Odds_Ratio) wird nun korrekt angezeigt (offenbar kann eine Tabelle nicht mit einer leeren Zelle beginnen)
+- NEW: Quick info (tooltip) also for titles of search results
+- NEW: Note "Articulus brevis minimus" is removed
+- Fix: "Top articles" are now always displayed correctly and loaded only once (optimisation when displaying search results after leaving an article view via the "← Search \*" link and when deleting the search term)
+- Fix: if a top article was selected, "← Top article" now appears in the detail view; if "Open in: Browser" is selected in the settings, nothing is displayed any more, as it is possible to jump back with "Esc".
+- Fix: Table calculation in article [Odds Ratio](https://flexikon.doccheck.com/de/Odds_Ratio) is now displayed correctly (apparently a table cannot start with an empty cell)
 
 ## [Version 1.2.2] - 2023-04-12
 
-- Fix: die Tabelle Berechnung im Artikel [Relatives Risiko](https://flexikon.doccheck.com/de/Relatives_Risiko) wird nun korrekt angezeigt (offenbar kann eine Tabelle nicht mit einer leeren Zelle beginnen)
+- Fix: the Calculation table in the article [Relative Risk](https://flexikon.doccheck.com/de/Relatives_Risiko) is now displayed correctly (apparently a table cannot start with an empty cell)
 
 ## [Version 1.2.1] - 2023-04-12
 
@@ -18,25 +18,25 @@
 
 ## [Version 1.2] - 2023-04-12
 
-- NEU: beim zurückgehen zur Suche wird der Suchbegriff wieder eingetragen
-- UI-Anpassungen: Das Laden des Artikels wird nun auch textuell angezeigt, der Titel stammt nach dem Laden direkt von der Artikelseite
+- NEW: when going back to the search, the search term is entered again
+- UI adjustments: Loading of the article is now also displayed textually, the title comes directly from the article page after loading
 
 ## [Version 1.1.3] - 2023-04-12
 
-- Fix: die Tabelle Differentialdiagnose im Artikel [Scharlach](https://flexikon.doccheck.com/de/Scharlach) wird nun korrekt angezeigt (es ist Raycast 1.49.3 nötig um Tabellen anzuzeigen)
+- Fix: the table differential diagnosis in the article [Scarlet fever](https://flexikon.doccheck.com/de/Scharlach) is now displayed correctly (Raycast 1.49.3 is needed to display tables)
 
 ## [Version 1.1.2] - 2023-04-10
 
-- NEU: Der erste Top Artikel zeigt nun die (auf der [Hauptseite](https://flexikon.doccheck.com/de/Hauptseite)) verfügbare Beschreibung als Tooltip an
-- Fix: der Artikel [Medizinische Abkürzungen](https://flexikon.doccheck.com/de/Medizinische_Abkürzungen) wird nun nicht mehr direkt angezeigt, da die Tabelle darin offenbar zu lang ist
+- NEW: the first top article now shows the description available (on the [main page](https://flexikon.doccheck.com/de/Hauptseite)) as a tooltip
+- Fix: the article [Medical Abbreviations](https://flexikon.doccheck.com/de/Medizinische_Abkürzungen) is now no longer displayed directly, as the table in it is apparently too long
 
 ## [Version 1.1.1] - 2023-04-09
 
-- NEU: wenn es keinen vorheriger Artikel vorhanden gibt, kann man nun zurück zur Suche gelangen
+- NEW: if there is no previous article available, you can now go back to the search
 
 ## [Version 1.1] - 2023-04-09
 
-- NEU: Artikel direkt in Raycast über Deeplinks öffnen (man kann sogar einmal zurückgehen!)
+- NEW: open articles directly in Raycast via deep links (you can even go back once!)
 
 ## [Initial Version] - 2023-04-01
 
