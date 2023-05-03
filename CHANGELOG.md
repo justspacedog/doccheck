@@ -10,7 +10,7 @@
 
 ## [Version 1.2.2] - 2023-04-12
 
-- Fix: the Calculation table in the article [Relative Risk](https://flexikon.doccheck.com/de/Relatives_Risiko) is now displayed correctly (apparently a table cannot start with an empty cell)
+- Fix: the Calculation table in the article [Relatives Risiko](https://flexikon.doccheck.com/de/Relatives_Risiko) is now displayed correctly (apparently a table cannot start with an empty cell)
 
 ## [Version 1.2.1] - 2023-04-12
 
@@ -23,12 +23,12 @@
 
 ## [Version 1.1.3] - 2023-04-12
 
-- Fix: the table differential diagnosis in the article [Scarlet fever](https://flexikon.doccheck.com/de/Scharlach) is now displayed correctly (Raycast 1.49.3 is needed to display tables)
+- Fix: the table differential diagnosis in the article [Scharlach](https://flexikon.doccheck.com/de/Scharlach) is now displayed correctly (Raycast 1.49.3 is needed to display tables)
 
 ## [Version 1.1.2] - 2023-04-10
 
 - NEW: the first top article now shows the description available (on the [main page](https://flexikon.doccheck.com/de/Hauptseite)) as a tooltip
-- Fix: the article [Medical Abbreviations](https://flexikon.doccheck.com/de/Medizinische_Abkürzungen) is now no longer displayed directly, as the table in it is apparently too long
+- Fix: the article [Medizinische Abkürzungen](https://flexikon.doccheck.com/de/Medizinische_Abkürzungen) is now no longer displayed directly, as the table in it is apparently too long
 
 ## [Version 1.1.1] - 2023-04-09
 
