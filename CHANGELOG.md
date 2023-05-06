@@ -1,5 +1,6 @@
 # DocCheck Changelog
 
+<<<<<<< HEAD
 ## [Version 1.3] - 2023-04-24
 
 - NEW: Quick info (tooltip) also for titles of search results
@@ -16,6 +17,8 @@
 
 - Bugfixes from @sxn (thanks!)
 
+=======
+>>>>>>> contributions/merge-1683367590204766000
 ## [Version 1.2] - 2023-04-12
 
 - NEW: when going back to the search, the search term is entered again
@@ -32,11 +35,19 @@
 
 ## [Version 1.1.1] - 2023-04-09
 
+<<<<<<< HEAD
 - NEW: if there is no previous article available, you can now go back to the search
 
 ## [Version 1.1] - 2023-04-09
 
 - NEW: open articles directly in Raycast via deep links (you can even go back once!)
+=======
+- NEW: go back to search if there is no prevous article
+
+## [Version 1.1] - 2023-04-09
+
+- NEW: Open article directly in Raycast using deeplinks (you can even go back one time!)
+>>>>>>> contributions/merge-1683367590204766000
 
 ## [Initial Version] - 2023-04-01
 
