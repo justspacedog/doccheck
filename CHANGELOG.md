@@ -1,9 +1,8 @@
 # DocCheck Changelog
 
-<<<<<<< HEAD
 ## [Version 1.3] - 2023-04-24
 
-- NEW: Quick info (tooltip) also for titles of search results
+- NEW: Tooltips now also for titles of search results
 - NEW: Note "Articulus brevis minimus" is removed
 - Fix: "Top articles" are now always displayed correctly and loaded only once (optimisation when displaying search results after leaving an article view via the "← Search \*" link and when deleting the search term)
 - Fix: if a top article was selected, "← Top article" now appears in the detail view; if "Open in: Browser" is selected in the settings, nothing is displayed any more, as it is possible to jump back with "Esc".
@@ -17,8 +16,6 @@
 
 - Bugfixes from @sxn (thanks!)
 
-=======
->>>>>>> contributions/merge-1683367590204766000
 ## [Version 1.2] - 2023-04-12
 
 - NEW: when going back to the search, the search term is entered again
@@ -35,13 +32,11 @@
 
 ## [Version 1.1.1] - 2023-04-09
 
-<<<<<<< HEAD
 - NEW: if there is no previous article available, you can now go back to the search
 
 ## [Version 1.1] - 2023-04-09
 
 - NEW: open articles directly in Raycast via deep links (you can even go back once!)
-=======
 - NEW: go back to search if there is no prevous article
 
 ## [Version 1.1] - 2023-04-09
