@@ -1,4 +1,4 @@
-import { Icon, Color, List, showToast, Toast, Action, ActionPanel, LaunchProps } from "@raycast/api";
+import { Icon, Color, List, showToast, Toast, Action, ActionPanel } from "@raycast/api";
 import axios from "axios";
 import cheerio from "cheerio";
 import { useEffect, useState } from "react";
@@ -14,93 +14,84 @@ type Result = {
   author: string;
 };
 
-export default function Command(props: LaunchProps) {
-  const [query, setQuery] = useState<string>(props.fallbackText ?? ""); // if we came here by jumping back from an article (with fallbackText) - this is our query
+export default function Command() {
+  const [query, setQuery] = useState<string>("");
   const [entries, setEntries] = useState<Result[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (query === "") {
-      // if query is empty load Top Articles
-      fetchTopArticles();
-    } else {
-      searchArticles(query);
+    async function fetch() {
+      setLoading(true);
+      if (!query) {
+        setEntries([]);
+        await axios
+          .get("https://flexikon.doccheck.com/de/")
+          .then((response) => {
+            const $ = cheerio.load(response.data);
+            const topArticles: Result[] = [];
+
+            $("#topArticlesSection .row > a, #topArticlesSection .is-grid > a").each((i, el) => {
+              const title = $(el).find("h3").text().trim();
+              const url = $(el).attr("href") ?? "";
+              const imageUrl = $(el).find("img").attr("src") ?? "";
+              const description = $(el).find("p").text().trim() ?? "";
+              const title_alias: string[] = [];
+              const date_publish = "";
+              const author = "";
+              topArticles.push({ title, url, imageUrl, description, title_alias, date_publish, author });
+            });
+            setEntries(topArticles);
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        setEntries([]);
+        try {
+          const response = await axios.get(
+            `https://search.doccheck.com/doccheck-portal/search?q=${query}&language=de&start=0&facetq=content_type:flexikon`
+          );
+          if (response.status === 200 && response.data.urls != 0) {
+            setEntries(response.data.urls);
+          } else if (response.status === 200) {
+            setEntries([
+              {
+                title: "Keine Suchergebnisse im Flexikon!",
+                url: "",
+                description: "Drücke ⏎ um den Suchbegriff auf AMBOSS im Browser zu suchen",
+                title_alias: [],
+                imageUrl: "",
+                date_publish: "",
+                author: "",
+              },
+            ]);
+          }
+        } catch (e) {
+          await showToast({
+            style: Toast.Style.Failure,
+            title: "Failed to fetch entries",
+            message: "Please try again later",
+          });
+        } finally {
+          setLoading(false);
+        }
+      }
     }
+    fetch();
   }, [query]);
 
-  async function fetchTopArticles() {
-    setLoading(true);
-    try {
-      const response = await axios.get("https://flexikon.doccheck.com/de/");
-      const $ = cheerio.load(response.data);
-      const topArticles: Result[] = [];
-      $("#topArticlesSection .row > a, #topArticlesSection .is-grid > a").each((i, el) => {
-        const title = $(el).find("h3").text().trim();
-        const url = $(el).attr("href") ?? "";
-        const imageUrl = $(el).find("img").attr("src") ?? "";
-        const description = $(el).find("p").text().trim() ?? "";
-        const title_alias: string[] = [];
-        const date_publish = "";
-        const author = "";
-        topArticles.push({ title, url, imageUrl, description, title_alias, date_publish, author });
-      });
-      setEntries(topArticles);
-      setLoading(false);
-    } catch (e) {
-      await showToast({
-        style: Toast.Style.Failure,
-        title: "Failed to fetch top articles",
-        message: "Please try again later",
-      });
-    } finally {
-      setLoading(false);
-    }
-  }
-  async function searchArticles(query: string) {
-    setLoading(true);
-    setEntries([]);
-    try {
-      const response = await axios.get(
-        `https://search.doccheck.com/doccheck-portal/search?q=${query}&language=de&start=0&facetq=content_type:flexikon`
-      );
-      if (response.status === 200 && response.data.urls != 0) {
-        setEntries(response.data.urls);
-      } else if (response.status === 200) {
-        setEntries([
-          {
-            title: "Keine Suchergebnisse im Flexikon!",
-            url: "",
-            description: "Drücke ⏎ um den Suchbegriff auf AMBOSS im Browser zu suchen",
-            title_alias: [],
-            imageUrl: "",
-            date_publish: "",
-            author: "spacedog",
-          },
-        ]);
-      }
-    } catch (e) {
-      await showToast({
-        style: Toast.Style.Failure,
-        title: "Failed to fetch articles",
-        message: "Please try again later",
-      });
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  if (query === "") {
-    // Display Top Articles
+  if (!query) {
     return (
       <List
         navigationTitle={`DocCheck Flexikon Suche`}
         filtering={false}
-        onSearchTextChange={async (text) => {
+        onSearchTextChange={(text) => {
           setQuery(text);
         }}
         throttle={true}
         isLoading={loading}
-        searchBarPlaceholder="Suchbegriff..."
+        searchBarPlaceholder="Search entry..."
       >
         <List.Section title={query ? "" : "Top Artikel"}>
           {entries.map((entry) => {
@@ -129,25 +120,49 @@ export default function Command(props: LaunchProps) {
         </List.Section>
       </List>
     );
-  } else {
+  }
+
   return (
-    // Display Search Entries
     <List
       navigationTitle={`DocCheck Flexikon Suche`}
       filtering={false}
-      onSearchTextChange={async (text) => {
+      onSearchTextChange={(text) => {
         setQuery(text);
       }}
       throttle={true}
       isLoading={loading}
-      searchBarPlaceholder="Suchbegriff..."
+      searchBarPlaceholder="Search entry..."
     >
       {entries.map((entry) => {
-        if (entry.title_alias[2]) {
+        if (entry.description) {
+          return (
+            <List.Item
+              key={entry.description}
+              title={entry.title}
+              icon={entry.imageUrl}
+              subtitle={entry.description}
+              actions={
+                <ActionPanel>
+                  <Action.Open
+                    icon={Icon.Uppercase}
+                    title="Suchbegriff als AMBOSS-Suche"
+                    target={"https://next.amboss.com/de/search?q=" + encodeURI(query) + "&v=overview"}
+                  />
+                  <Action.Open
+                    icon={Icon.MagnifyingGlass}
+                    title="Suchbegriff als Flexikon-Suche"
+                    target={"https://www.doccheck.com/search?q=" + encodeURI(query)}
+                    shortcut={{ modifiers: ["cmd", "shift"], key: "enter" }}
+                  />
+                </ActionPanel>
+              }
+            />
+          );
+        } else if (entry.title_alias[2]) {
           return (
             <List.Item
               key={entry.url}
-              title={{ value: entry.title, tooltip: entry.title }}
+              title={entry.title}
               accessories={[
                 { tag: { value: entry.title_alias[0], color: Color.Red }, tooltip: entry.title_alias[0] },
                 { tag: { value: entry.title_alias[1], color: Color.Red }, tooltip: entry.title_alias[1] },
@@ -169,7 +184,7 @@ export default function Command(props: LaunchProps) {
           return (
             <List.Item
               key={entry.url}
-              title={{ value: entry.title, tooltip: entry.title }}
+              title={entry.title}
               accessories={[
                 { tag: { value: entry.title_alias[0], color: Color.Red }, tooltip: entry.title_alias[0] },
                 { tag: { value: entry.title_alias[1], color: Color.Red }, tooltip: entry.title_alias[1] },
@@ -190,7 +205,7 @@ export default function Command(props: LaunchProps) {
           return (
             <List.Item
               key={entry.url}
-              title={{ value: entry.title, tooltip: entry.title }}
+              title={entry.title}
               accessories={[
                 { tag: { value: entry.title_alias[0], color: Color.Red }, tooltip: entry.title_alias[0] },
                 { icon: Icon.Person, text: entry.author, tooltip: entry.author },
@@ -206,34 +221,11 @@ export default function Command(props: LaunchProps) {
               actions={EntryActions(entry.url, entry.title, query)}
             />
           );
-        } else if (entry.author && entry.description) {
-          return (
-            <List.Item
-              key={entry.description}
-              title={entry.title}
-              subtitle={entry.description}
-              actions={
-                <ActionPanel>
-                  <Action.Open
-                    icon={Icon.Uppercase}
-                    title="Suchbegriff als AMBOSS-Suche"
-                    target={"https://next.amboss.com/de/search?q=" + encodeURI(query) + "&v=overview"}
-                  />
-                  <Action.Open
-                    icon={Icon.MagnifyingGlass}
-                    title="Suchbegriff als Flexikon-Suche"
-                    target={"https://www.doccheck.com/search?q=" + encodeURI(query)}
-                    shortcut={{ modifiers: ["cmd", "shift"], key: "enter" }}
-                  />
-                </ActionPanel>
-              }
-            />
-          );
-        } else if (entry.author) {
+        } else if (entry.title) {
           return (
             <List.Item
               key={entry.url}
-              title={{ value: entry.title, tooltip: entry.title }}
+              title={entry.title}
               accessories={[
                 { icon: Icon.Person, text: entry.author, tooltip: entry.author },
                 {
@@ -252,7 +244,7 @@ export default function Command(props: LaunchProps) {
       })}
     </List>
   );
-}}
+}
 
 function EntryActions(url: string, title: string, query: string) {
   return (
