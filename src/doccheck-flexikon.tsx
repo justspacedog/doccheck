@@ -133,7 +133,7 @@ export default function Command(props: LaunchProps) {
         isLoading={loading}
         searchBarPlaceholder="Search..."
       >
-        <List.Section title={query ? "" : "Top Artikel"}>
+        <List.Section title={"Top Articles"}>
           {entries.map((entry) => {
             if (entry.description) {
               return (
