@@ -26,6 +26,7 @@ export default function Command(props: LaunchProps) {
       // if query is empty load Top Articles
       fetchTopArticles();
     } else if (noSearchResults) {
+      // if there are no search results load alternative search entries
       setEntries([
         {
           title: "AMBOSS",
