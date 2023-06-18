@@ -26,6 +26,7 @@ type HistoryItem = {
   date_publish: string;
   author: string;
 };
+
 const LASTRELOAD_KEY = "lastReload";
 
 const TOPARTICLES_KEY = "topArticles";
