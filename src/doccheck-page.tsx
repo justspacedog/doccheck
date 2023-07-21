@@ -321,12 +321,10 @@ export default function DocCheckPage(props: DocCheckPageProps) {
   }
 
   async function checkFavouriteStatus(value: HistoryItem) {
-    let thisItem = value;
-
     const favouritesString = (await LocalStorage.getItem(FAVOURITES_KEY)) as string;
     if (favouritesString != undefined) {
       let favouriteItems = JSON.parse(favouritesString);
-      const currentArticleInHistory = favouriteItems.find((o: HistoryItem) => o.url === thisItem.url);
+      const currentArticleInHistory = favouriteItems.find((o: HistoryItem) => o.url === value.url);
       if (currentArticleInHistory !== undefined) {
         // delete old history entry when it already exists
         favouriteItems = favouriteItems.filter((item: HistoryItem) => item.url !== currentArticleInHistory.url);
@@ -755,7 +753,7 @@ export default function DocCheckPage(props: DocCheckPageProps) {
   }
 }
 
-async function controllToast(loading: Boolean) {
+async function controllToast(loading: boolean) {
   const toast = await showToast({
     style: Toast.Style.Animated,
     title: "Loading article",
@@ -768,7 +766,7 @@ async function controllToast(loading: Boolean) {
 async function setHistoryItem(value: HistoryItem) {
   const historyString = (await LocalStorage.getItem(HISTORY_KEY)) as string;
   if (historyString != undefined) {
-    let historyItems = JSON.parse(historyString);
+    const historyItems = JSON.parse(historyString);
 
     const currentArticleInHistory = historyItems.find((o: HistoryItem) => o.title === value.title);
     if (currentArticleInHistory != undefined) {
