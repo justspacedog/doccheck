@@ -802,6 +802,7 @@ function EntryActions(
           title={"Clear All Favourites"}
           onAction={() => clearAllFavourites(fetchTopArticles, getHistoryAndFavourites)}
         />
+        <Action.CopyToClipboard title="Copy URL" content={url} shortcut={{ modifiers: ["cmd"], key: "u" }} />
       </ActionPanel>
     );
   } else {
