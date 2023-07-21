@@ -347,7 +347,7 @@ export default function DocCheckPage(props: DocCheckPageProps) {
         message: "Please wait for the article to load",
       });
     } else if (historyString != undefined) {
-      let historyItems = JSON.parse(historyString);
+      const historyItems = JSON.parse(historyString);
       const thisItem = historyItems[historyItems.length - 1];
 
       const favouritesString = (await LocalStorage.getItem(FAVOURITES_KEY)) as string;
